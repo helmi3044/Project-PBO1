@@ -17,14 +17,11 @@ jalan = True # buat var diisi true
 # beberapa method dan function
 def beranda():
 	print(''' SELAMAT DATANG DI DAPUR MAMA
-	silahkan pilih salah satu :
-	1. Data Pembeli
-	2. Data Pemilik
-	3. Data Karyawan
-	4. Daftar Menu
-	5. Pesan
-	6. Data Pesanan Hari ini
-	7. Exit
+	masuk sebagai? :
+	1. Pembeli
+	2. Pemilik
+	3. Karyawan
+	4. Exit
 	''')
 	utama = int(input('masukkan pilihan : '))
 	return utama
@@ -32,23 +29,24 @@ def beranda():
 def tampilkanPilihan1():
 	print('-----------------')
 	print('''Pilih menu: 
-	1. Tampilkan daftar Pembeli
-	2. Tambah data Pembeli
+	1. Tambah data Pembeli
+	2. Daftar Menu
+	3. Pesan Menu
+	4. exit
 	''')
 	pilihan = input('Masukkan pilihan: ')
 	if pilihan == '1':
-		tampilkanDaftarcust()
-	elif pilihan == '2':
 		tambahDatacust()
+		return tampilkanPilihan1()
+	elif pilihan == '2':
+		tampilkanDaftarmenu()
+		return tampilkanPilihan1()
+	elif pilihan == '3':
+		tambahpesanan()
+		return tampilkanPilihan1()
+	elif pilihan == '4':
+		return beranda
 	return pilihan
-
-def tampilkanDaftarcust():
-	global cust # memanfaatkan var global yg sdh didefinisikan diatas
-	print('\nDaftar Pembeli:')
-	daftarcust = cust.getDaftarPembeli() #menampung luaran dri func get
-	for cust_row in daftarcust:
-		print(cust_row)
-	print('\n')
 
 def tambahDatacust():
 	global cust
@@ -59,19 +57,63 @@ def tambahDatacust():
 	cust.setDataPembeli(Nama, Alamat, NomorHP)
 	print('\n')
 
+def tampilkanDaftarmenu():
+	global menulist
+	print('\nDaftar Menu:')
+	daftarmenu = menulist.getDaftarMenu()
+	for menu_row in daftarmenu:
+		print(menu_row)
+	print('\n')
+
+def tambahpesanan():
+	global order
+	print('\nSilahkan Pesan Makanan:')
+	NamaMenu = input('Masukkan nama menu: ')
+	Harga = input('Masukkan harga: ')
+	Quantity = input('Pesan berapa ? : ')
+	order.setDataPesanan(NamaMenu, Harga, Quantity)
+	print('\n')
+	lagi = input('apakah mau tambah lagi? (ya/tidak) : ')
+	if lagi == 'ya':
+		return tambahpesanan()
+	elif lagi == 'tidak':
+		print('\nHitung total harga pesanan:')
+		bayar = order.total()
+		print('total harga pesanan : ', bayar)
+		return lagi()
+
 def tampilkanPilihan2():
 	print('-----------------')
-	print('Pilih menu:')
-	print('1. Tampilkan daftar Pemilik')
-	print('2. Tambah data Pemilik')
-	print('3. Cek pendapatan')
+	print('''Pilih menu:
+	1. Tampilkan daftar Pemilik
+	2. Tambah data Pemilik
+	3. Cek pendapatan
+	4. Tampilkan daftar pembeli
+	5. Tampilkan daftar Karyawan
+	6. Gaji Karyawan
+	7. Exit
+	''')
 	pilihan2 = input('Masukkan pilihan: ')
 	if pilihan2 == '1':
 		tampilkanDaftarown()
+		return tampilkanPilihan2()
 	elif pilihan2 == '2':
 		tambahDataown()
+		return tampilkanPilihan2()
 	elif pilihan2 == '3':
 		cekpenghasilan()
+		return tampilkanPilihan2()
+	elif pilihan2 == '4':
+		tampilkanDaftarcust()
+		return tampilkanPilihan2()
+	elif pilihan2 == '5':
+		tampilkanDaftaremp()
+		return tampilkanPilihan2()
+	elif pilihan2 == '6':
+		fee()
+		return tampilkanPilihan2()
+	elif pilihan2 == '7':
+		return beranda
 	return pilihan2
 
 def tampilkanDaftarown():
@@ -98,19 +140,42 @@ def cekpenghasilan():
 	print('penghasilan anda sebesar : ', penghasilan)
 	print('\n')
 
+def tampilkanDaftarcust():
+	global cust # memanfaatkan var global yg sdh didefinisikan diatas
+	print('\nDaftar Pembeli:')
+	daftarcust = cust.getDaftarPembeli() #menampung luaran dri func get
+	for cust_row in daftarcust:
+		print(cust_row)
+	print('\n')
+
 def tampilkanPilihan3():
 	print('-----------------')
-	print('Pilih menu:')
-	print('1. Tampilkan daftar Karyawan')
-	print('2. Tambah data Karyawan')
-	print('3. gaji Karyawan')
+	print('''Pilih menu:
+	1. Tampilkan daftar Karyawan
+	2. Tambah data Karyawan
+	3. gaji Karyawan
+	4. Tambah Daftar Menu
+	5. Daftar Pesanan
+	6. Exit 
+	''')
 	pilihan3 = input('Masukkan pilihan: ')
 	if pilihan3 == '1':
 		tampilkanDaftaremp()
+		return tampilkanPilihan3()
 	elif pilihan3 == '2':
 		tambahDataemp()
+		return tampilkanPilihan3()
 	elif pilihan3 == '3':
 		fee()
+		return tampilkanPilihan3()
+	elif pilihan3 == '4':
+		tambahDatamenu()
+		return tampilkanPilihan3()
+	elif pilihan3 == '5':
+		daftarpesanan()
+		return tampilkanPilihan3()
+	elif pilihan3 == '6':
+		return beranda
 	return pilihan3
 
 def tampilkanDaftaremp():
@@ -140,26 +205,6 @@ def fee():
 		print(fee_row)
 	print('\n')
 
-def tampilkanPilihan4():
-	print('-----------------')
-	print('Pilih menu:')
-	print('1. Tampilkan daftar menu')
-	print('2. Tambah daftar menu')
-	pilihan2 = input('Masukkan pilihan: ')
-	if pilihan2 == '1':
-		tampilkanDaftarmenu()
-	elif pilihan2 == '2':
-		tambahDatamenu()
-	return pilihan2
-
-def tampilkanDaftarmenu():
-	global menulist
-	print('\nDaftar Menu:')
-	daftarmenu = menulist.getDaftarMenu()
-	for menu_row in daftarmenu:
-		print(menu_row)
-	print('\n')
-
 def tambahDatamenu():
 	global menulist
 	print('\nTambah daftar menu:')
@@ -168,39 +213,7 @@ def tambahDatamenu():
 	menulist.setDataMenu(NamaMenu, Harga)
 	print('\n')
 
-def tampilkanPilihan5():
-	print('-----------------')
-	print('Pilih menu:')
-	print('1. Pesan makanan')
-	print('2. Total harga pesanan')
-	pilihan2 = input('Masukkan pilihan: ')
-	if pilihan2 == '1':
-		tambahpesanan()
-	elif pilihan2 == '2':
-		totalharga()
-	return pilihan2
-
-def tambahpesanan():
-	global order
-	print('\nSilahkan Pesan Makanan:')
-	NamaMenu = input('Masukkan nama menu: ')
-	Harga = input('Masukkan harga: ')
-	Quantity = input('Pesan berapa ? : ')
-	order.setDataPesanan(NamaMenu, Harga, Quantity)
-	print('\n')
-	lagi = input('apakah mau tambah lagi? (ya/tidak) : ')
-	if lagi == 'ya':
-		return tambahpesanan()
-	elif lagi == 'tidak':
-		return lagi()
-	
-def totalharga():
-	global order
-	print('\nHitung total harga pesanan:')
-	bayar = order.total()
-	print('total harga pesanan : ', bayar)
-
-def tampilkanPilihan6():
+def daftarpesanan():
 	print('-----------------')
 	print('daftar pesanan :')
 	global order
@@ -218,10 +231,4 @@ while jalan == True:
 	elif utama == 3:
 		tampilkanPilihan3()
 	elif utama == 4:
-		tampilkanPilihan4()
-	elif utama == 5:
-		tampilkanPilihan5()
-	elif utama == 6:
-		tampilkanPilihan6()
-	elif utama == 7:
 		break
