@@ -13,7 +13,7 @@ class Pemilik(Person):
 		self.executeQuery(self.query)
 		
 	def getDaftarPemilik(self):
-		self.query = 'SELECT t2.Nama, t2.Alamat, t2.NomorHP \
+		self.query = 'SELECT t1.IdPemilik, t2.Nama, t2.Alamat, t2.NomorHP \
 			FROM Pemilik t1 \
 			join person t2 on t1.IdPerson=t2.IdPerson' 
 		# ~ print('self.query : ', self.query )
@@ -23,6 +23,6 @@ class Pemilik(Person):
 	def pendapatan(self):
 		self.query = 'SELECT SUM(t2.Harga * t1.Quantity) as pendapatan \
 			FROM Pesanan t1 \
-			join Menu t2 on t1.MenuId=t2.MenuId;'
+			join Menu t2 on t1.MenuId=t2.MenuId'
 		daftar = self.executeQuery(self.query, True)
 		return daftar

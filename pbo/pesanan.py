@@ -3,9 +3,9 @@ from datamanager import DataManager
 from menu import Menu
 
 # class pesanan merupakan turunan dari kelas menu, sehingga membawa method bawaan dari class menu dan class data manager
-# ada 2 method yang hampir sama dgn menu (set atau memasukkan data) maka terjadi overloading (paramater/signature berbeda)
+# ada 2 method yang hampir sama dgn menu (set atau memasukkan data)
 class Pesanan(Menu):
-	def setDataPesanan(self, NamaMenu, Harga, Quantity):\
+	def setDataPesanan(self, NamaMenu, Harga, Quantity):
 		# memanggil method bawaan parent class
 		self.setDataMenu(NamaMenu, Harga)
 		MenuId = self.getDataMenu(NamaMenu, Harga)
@@ -16,7 +16,7 @@ class Pesanan(Menu):
 		self.executeQuery(self.query)
 		
 	def getDaftarPesanan(self):
-		self.query = 'SELECT t2.NamaMenu, t2.Harga, t1.Quantity \
+		self.query = 'SELECT t1.PesananId, t2.NamaMenu, t2.Harga, t1.Quantity \
 			FROM  Pesanan t1 \
 			join Menu t2 on t1.MenuId=t2.MenuId' 
 		# ~ print('self.query : ', self.query )
@@ -27,7 +27,7 @@ class Pesanan(Menu):
 		self.query = 'SELECT t2.NamaMenu, t1.Quantity, (t2.Harga * t1.Quantity) as TotalHarga \
 			FROM Pesanan t1 \
 			join Menu t2 on t1.MenuId=t2.MenuId \
-			Order by t2.MenuId Desc LIMIT 1'
+			Order by t1.PesananId Desc LIMIT 1'
 		# ~ print('self.query : ', self.query )
 		daftar = self.executeQuery(self.query, True)
 		return daftar

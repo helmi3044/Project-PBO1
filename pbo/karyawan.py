@@ -13,7 +13,7 @@ class Karyawan(Person):
 		self.executeQuery(self.query)
 		
 	def getDaftarKaryawan(self):
-		self.query = 'SELECT t2.Nama, t2.Alamat, t2.NomorHP, t1.JamKerja, t1.HargaPerjam \
+		self.query = 'SELECT t1.IdKaryawan, t2.Nama, t2.Alamat, t2.NomorHP, t1.JamKerja, t1.HargaPerjam \
 			FROM karyawan t1 \
 			join person t2 on t1.IdPerson=t2.IdPerson' 
 		# ~ print('self.query : ', self.query )

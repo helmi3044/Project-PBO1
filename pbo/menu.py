@@ -3,7 +3,7 @@ from datamanager import DataManager
 
 #turunan dari kelas data manager
 class Menu(DataManager):
-	# untuk memasukkan data baru ke tabel person
+	# untuk memasukkan data baru ke tabel menu
 	def setDataMenu(self, NamaMenu, Harga):
 		self.query = 'INSERT INTO Menu (NamaMenu, Harga) \
 			VALUES (\'%s\', \'%s\')' 
