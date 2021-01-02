@@ -28,7 +28,8 @@ def beranda():
 
 def tampilkanPilihan1():
 	print('-----------------')
-	print('''Pilih menu: 
+	print('''catatan !! : Setiap mau pesan harus isi data pembeli dulu ya :)
+	Pilih menu: 
 	1. Tambah data Pembeli
 	2. Daftar Menu
 	3. Pesan Menu
@@ -75,12 +76,17 @@ def tambahpesanan():
 	print('\n')
 	lagi = input('apakah mau tambah lagi? (ya/tidak) : ')
 	if lagi == 'ya':
+		totalharga()
 		return tambahpesanan()
 	elif lagi == 'tidak':
-		print('\nHitung total harga pesanan:')
-		bayar = order.total()
-		print('total harga pesanan : ', bayar)
-		return lagi()
+		totalharga()
+	return lagi
+
+def totalharga():
+	global order
+	print('\nHitung total harga pesanan:')
+	bayar = order.total()
+	print('total harga pesanan : ', bayar)
 
 def tampilkanPilihan2():
 	print('-----------------')
